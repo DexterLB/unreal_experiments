@@ -17,3 +17,7 @@ void FClass::Update(float deltaMs, FObject& object) {
         component->Update(deltaMs, object);
     }
 }
+
+void FClass::AddComponent(shared_ptr<IComponent> component) {
+    this->components.push_back(component); // priority
+}

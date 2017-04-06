@@ -1,6 +1,10 @@
 #include <iostream>
 using std::cout;
+using std::cin;
 using std::endl;
+
+#include <fstream>
+using std::ifstream;
 
 #include <vector>
 using std::vector;
@@ -11,6 +15,7 @@ using std::unordered_map;
 #include "world.h"
 #include "base_object.h"
 #include "object.h"
+#include "parser.h"
 
 
 class World : public IWorld
@@ -38,8 +43,14 @@ void World::Update(float deltaMs) {
 }
 
 void World::ParseTypes(const char* file) {
-    this->classes["mario"] = FClass("mario");
-    this->classes["luigi"] = FClass("luigi");
+    if (!file || file[0] == '\0' ) {
+        ParseClasses(cin, this->classes);
+    } else {
+        ifstream f;
+        f.open(file);
+        ParseClasses(f, this->classes);
+        f.close();
+    }
 }
 
 void World::SpawnObject(const char* objectType, const char* objectName) {

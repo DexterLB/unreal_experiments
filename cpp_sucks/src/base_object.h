@@ -20,6 +20,7 @@ class FClass {
         FClass();
         FClass(const string& name);
         const string& Name() const;
+        void AddComponent(shared_ptr<IComponent> component);
 
         void Update(float deltaMs, FObject& object);
     private:
