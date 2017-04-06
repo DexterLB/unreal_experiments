@@ -18,5 +18,6 @@ const string& FObject::Name() const {
 }
 
 void FObject::Update(float deltaMs) {
+    this->klass->Update(deltaMs, *this);
     cout << this->klass->Name() << " " << this->Name() << " updated for " << deltaMs << "ms." << endl;
 }

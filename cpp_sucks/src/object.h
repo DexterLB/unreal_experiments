@@ -5,6 +5,8 @@ using std::string;
 
 #include "base_object.h"
 
+class FClass;
+
 class FObject {
     public:
         FObject(FClass* klass, const string& name);
