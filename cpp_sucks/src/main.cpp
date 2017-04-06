@@ -1,6 +1,10 @@
 #include <iostream>
 
+#include "world.h"
+
 int main(int argc, char *argv[]) {
-    std::cout << "Hello World!" << std::endl;
+    IWorld* world = CreateWorld();
+    world->Update(42);
+    world->Destroy();
     return 0;
 }
