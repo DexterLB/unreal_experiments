@@ -51,6 +51,10 @@ void World::ParseTypes(const char* file) {
         ParseClasses(f, this->classes);
         f.close();
     }
+
+    for (const auto& kv: this->classes) {
+        kv.second.Initialise();
+    }
 }
 
 void World::SpawnObject(const char* objectType, const char* objectName) {
