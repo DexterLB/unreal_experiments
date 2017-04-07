@@ -4,7 +4,7 @@ using std::endl;
 
 #include <memory>
 using std::shared_ptr;
-using std::make_shared;
+using std::make_unique;
 
 #include "shooter.h"
 #include "../argument_parser.h"
@@ -17,7 +17,7 @@ void FShooterComponent::Update(float deltaMs, FObject& object, FWorld& world) {
     cout << "update jump: " << this->height << " " << this->time << " " << this->delay << endl;
 }
 
-shared_ptr<FShooterComponent> FShooterComponent::Make(const string& argument) {
+unique_ptr<FShooterComponent> FShooterComponent::Make(const string& argument) {
     auto arguments = ParseStringArguments(argument);
 
     float height = stof(arguments[0]);
@@ -26,5 +26,9 @@ shared_ptr<FShooterComponent> FShooterComponent::Make(const string& argument) {
     // segfault on wrong number of arguments, wooooo
 
     cout << "create shooter" << endl;
-    return make_shared<FShooterComponent>(height, time, delay);
+    return make_unique<FShooterComponent>(height, time, delay);
+}
+
+unique_ptr<IComponent> FShooterComponent::Clone() {
+    return make_unique<FShooterComponent>(*this);
 }

@@ -24,11 +24,14 @@ class FObject;
 class FWorld : public IWorld
 {
     public:
+        FWorld() = default;
+        FWorld(const FWorld&) = delete;
+        FWorld& operator=(const FWorld&) = delete;
         void ParseTypes(const char* file);
         void SpawnObject(const char* objectType, const char* objectName);
         void Update(float deltaMs);
         void Destroy();
     private:
         unordered_map<string, unique_ptr<FClass> > classes;
-        vector<FObject> objects;
+        vector< unique_ptr<FObject> > objects;
 };

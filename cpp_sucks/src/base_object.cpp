@@ -2,6 +2,8 @@
 using std::remove_if;
 
 #include <iostream>
+#include <memory>
+using std::make_unique;
 
 #include "base_object.h"
 
@@ -17,30 +19,28 @@ const string& FClass::Name() const {
     return this->name;
 }
 
-void FClass::Update(float deltaMs, FObject& object, FWorld& world) {
+vector< unique_ptr<IComponent> > FClass::MakeComponents() {
+    vector< unique_ptr<IComponent> > components;
+    cout << "begin copy" << endl;
     for (auto& component: this->components) {
-        component->Update(deltaMs, object, world);
+        // copying seems to be the most straight-forward way to construct
+        // "instances" of components
+        cout << "component of " << this->name << endl;
+        components.push_back(move(component->Clone()));
     }
+    return components;
 }
 
-void FClass::AddComponent(shared_ptr<IComponent> component) {
-    this->components.push_back(component);
+void FClass::AddComponent(unique_ptr<IComponent> component) {
+    this->components.push_back(move(component));
 }
 
 void FClass::Initialise() {
-    // remove fake components
-    this->components.erase(
-        remove_if(
-            this->components.begin(),
-            this->components.end(),
-            [](const auto& component) { return component != nullptr; }
-        )
-    );
-
     // sort components by priority
     sort(
         this->components.begin(),
         this->components.end(),
         [](const auto& a, const auto& b) { return a->Priority() < b->Priority(); }
     );
+    cout << "components of " << this-> name << ": " << this->components.size() << endl;
 }

@@ -8,5 +8,7 @@ using std::shared_ptr;
 class FRenderableComponent : public IComponent {
 public:
     void Update(float deltaMs, FObject& object, FWorld& world);
-    static shared_ptr<FRenderableComponent> Make(const string& argument);
+
+    unique_ptr<IComponent> Clone();
+    static unique_ptr<FRenderableComponent> Make(const string& argument);
 };

@@ -4,7 +4,7 @@ using std::endl;
 
 #include <memory>
 using std::shared_ptr;
-using std::make_shared;
+using std::make_unique;
 
 #include "multiplier.h"
 #include "../argument_parser.h"
@@ -17,7 +17,7 @@ void FMultiplierComponent::Update(float deltaMs, FObject& object, FWorld& world)
     cout << "update jump: " << this->height << " " << this->time << " " << this->delay << endl;
 }
 
-shared_ptr<FMultiplierComponent> FMultiplierComponent::Make(const string& argument) {
+unique_ptr<FMultiplierComponent> FMultiplierComponent::Make(const string& argument) {
     auto arguments = ParseStringArguments(argument);
 
     float height = stof(arguments[0]);
@@ -26,5 +26,9 @@ shared_ptr<FMultiplierComponent> FMultiplierComponent::Make(const string& argume
     // segfault on wrong number of arguments, wooooo
 
     cout << "create multiplier" << endl;
-    return make_shared<FMultiplierComponent>(height, time, delay);
+    return make_unique<FMultiplierComponent>(height, time, delay);
+}
+
+unique_ptr<IComponent> FMultiplierComponent::Clone() {
+    return make_unique<FMultiplierComponent>(*this);
 }

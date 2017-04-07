@@ -4,7 +4,7 @@ using std::endl;
 
 #include <memory>
 using std::shared_ptr;
-using std::make_shared;
+using std::make_unique;
 
 #include "jumpable.h"
 #include "../argument_parser.h"
@@ -17,7 +17,7 @@ void FJumpableComponent::Update(float deltaMs, FObject& object, FWorld& world) {
     cout << "update jump: " << this->height << " " << this->time << " " << this->delay << endl;
 }
 
-shared_ptr<FJumpableComponent> FJumpableComponent::Make(const string& argument) {
+unique_ptr<FJumpableComponent> FJumpableComponent::Make(const string& argument) {
     auto arguments = ParseStringArguments(argument);
 
     float height = stof(arguments[0]);
@@ -26,5 +26,9 @@ shared_ptr<FJumpableComponent> FJumpableComponent::Make(const string& argument) 
     // segfault on wrong number of arguments, wooooo
 
     cout << "create jumpable" << endl;
-    return make_shared<FJumpableComponent>(height, time, delay);
+    return make_unique<FJumpableComponent>(height, time, delay);
+}
+
+unique_ptr<IComponent> FJumpableComponent::Clone() {
+    return make_unique<FJumpableComponent>(*this);
 }

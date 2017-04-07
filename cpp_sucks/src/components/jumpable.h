@@ -7,7 +7,8 @@ public:
     FJumpableComponent(float height, float time, float delay);
     void Update(float deltaMs, FObject& object, FWorld& world);
 
-    static shared_ptr<FJumpableComponent> Make(const string& argument);
+    unique_ptr<IComponent> Clone();
+    static unique_ptr<FJumpableComponent> Make(const string& argument);
 private:
     float height;
     float time;

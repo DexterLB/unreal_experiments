@@ -7,7 +7,7 @@ using std::string;
 using std::vector;
 
 #include <memory>
-using std::shared_ptr;
+using std::unique_ptr;
 
 #include "object.h"
 #include "component.h"
@@ -20,12 +20,14 @@ class FClass {
     public:
         FClass();
         FClass(const string& name);
+        FClass(const FClass&) = delete;
+        FClass& operator=(const FClass&) = delete;
         const string& Name() const;
-        void AddComponent(shared_ptr<IComponent> component);
+        void AddComponent(unique_ptr<IComponent> component);
         void Initialise();
 
-        void Update(float deltaMs, FObject& object, FWorld& world);
+        vector< unique_ptr<IComponent> > MakeComponents();
     private:
         string name;
-        vector< shared_ptr<IComponent> > components;
+        vector< unique_ptr<IComponent> > components;
 };
