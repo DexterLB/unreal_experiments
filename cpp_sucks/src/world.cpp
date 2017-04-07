@@ -13,59 +13,9 @@ using std::vector;
 using std::unordered_map;
 
 #include "world.h"
-#include "base_object.h"
-#include "object.h"
-#include "parser.h"
-
-
-class World : public IWorld
-{
-    public:
-        void ParseTypes(const char* file);
-        void SpawnObject(const char* objectType, const char* objectName);
-        void Update(float deltaMs);
-        void Destroy();
-    private:
-        unordered_map<string, FClass> classes;
-        vector<FObject> objects;
-};
+#include "world_impl.h"
 
 IWorld* CreateWorld() {
-    return new World();
+    return new FWorld();
 }
 
-void World::Update(float deltaMs) {
-    for (auto object : this->objects) {
-        object.Update(deltaMs);
-    }
-
-    cout << "World updated with " << deltaMs << " ms." << endl;
-}
-
-void World::ParseTypes(const char* file) {
-    if (!file || file[0] == '\0' ) {
-        ParseClasses(cin, this->classes);
-    } else {
-        ifstream f;
-        f.open(file);
-        ParseClasses(f, this->classes);
-        f.close();
-    }
-
-    for (auto& kv: this->classes) {
-        kv.second.Initialise();
-    }
-}
-
-void World::SpawnObject(const char* objectType, const char* objectName) {
-    FClass& klass = this->classes[string(objectType)];
-
-    this->objects.push_back(FObject(
-        &klass,
-        string(objectName)
-    ));
-}
-
-void World::Destroy() {
-    delete this;    // this is evil.
-}
