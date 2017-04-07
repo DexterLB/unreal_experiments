@@ -1,3 +1,5 @@
+#pragma once
+
 #include <iostream>
 using std::cout;
 using std::cin;
@@ -17,6 +19,8 @@ using std::unordered_map;
 #include "object.h"
 #include "parser.h"
 
+class FObject;
+
 class FWorld : public IWorld
 {
     public:
@@ -25,6 +29,6 @@ class FWorld : public IWorld
         void Update(float deltaMs);
         void Destroy();
     private:
-        unordered_map<string, FClass> classes;
+        unordered_map<string, unique_ptr<FClass> > classes;
         vector<FObject> objects;
 };

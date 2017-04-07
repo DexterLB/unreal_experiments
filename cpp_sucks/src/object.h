@@ -3,9 +3,11 @@
 #include <string>
 using std::string;
 
-#include "base_object.h"
-
 class FClass;
+class FWorld;
+
+#include "base_object.h"
+#include "world_impl.h"
 
 class FObject {
     public:
@@ -13,7 +15,7 @@ class FObject {
         const FClass& Class() const;
         const string& Name() const;
 
-        void Update(float deltaMs);
+        void Update(float deltaMs, FWorld& world);
     private:
         FClass* klass;  // maybe some kind of smart pointer?
         string name;

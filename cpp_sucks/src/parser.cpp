@@ -64,7 +64,7 @@ FClass ParseClass(const string& line) {
     return FClass(line);
 }
 
-void ParseClasses(istream& stream, unordered_map<string, FClass>& classes) {
+void ParseClasses(istream& stream, unordered_map<string, unique_ptr<FClass> >& classes) {
     string line;
 
     unique_ptr<FClass> klass;
@@ -79,10 +79,10 @@ void ParseClasses(istream& stream, unordered_map<string, FClass>& classes) {
             klass->AddComponent(ParseComponent(line));
         } else {
             if (klass) {
-                classes[klass->Name()] = *klass;
+                classes[klass->Name()] = std::move(klass);
             }
             klass = make_unique<FClass>(ParseClass(line));
         }
     }
-    classes[klass->Name()] = *klass;
+    classes[klass->Name()] = std::move(klass);
 }

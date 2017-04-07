@@ -13,7 +13,7 @@ FJumpableComponent::FJumpableComponent(float _height, float _time, float _delay)
     : height(_height), time(_time), delay(_delay) {
 }
 
-void FJumpableComponent::Update(float deltaMs, FObject& object) {
+void FJumpableComponent::Update(float deltaMs, FObject& object, FWorld& world) {
     cout << "update jump: " << this->height << " " << this->time << " " << this->delay << endl;
 }
 

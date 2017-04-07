@@ -5,10 +5,14 @@ using std::unordered_map;
 
 #include <memory>
 using std::shared_ptr;
+using std::unique_ptr;
 
 #include <iostream>
 using std::istream;
 
 #include "component.h"
+#include "base_object.h"
 
-void ParseClasses(istream& stream, unordered_map<string, FClass>& components);
+class FClass;
+
+void ParseClasses(istream& stream, unordered_map<string, unique_ptr<FClass> >& components);

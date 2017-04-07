@@ -2,7 +2,7 @@
 
 void FWorld::Update(float deltaMs) {
     for (auto object : this->objects) {
-        object.Update(deltaMs);
+        object.Update(deltaMs, *this);
     }
 
     cout << "FWorld updated with " << deltaMs << " ms." << endl;
@@ -19,15 +19,15 @@ void FWorld::ParseTypes(const char* file) {
     }
 
     for (auto& kv: this->classes) {
-        kv.second.Initialise();
+        kv.second->Initialise();
     }
 }
 
 void FWorld::SpawnObject(const char* objectType, const char* objectName) {
-    FClass& klass = this->classes[string(objectType)];
+    FClass* klass = this->classes[string(objectType)].get();   // a dangerous game, this is
 
     this->objects.push_back(FObject(
-        &klass,
+        klass,  // maybe there's a better way than passing a bare pointer?
         string(objectName)
     ));
 }

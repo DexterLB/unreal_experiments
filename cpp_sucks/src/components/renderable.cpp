@@ -8,7 +8,7 @@ using std::make_shared;
 
 #include "renderable.h"
 
-void FRenderableComponent::Update(float deltaMs, FObject& object) {
+void FRenderableComponent::Update(float deltaMs, FObject& object, FWorld& world) {
     cout << "update render" << endl;
 }
 

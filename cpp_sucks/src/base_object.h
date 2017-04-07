@@ -11,6 +11,7 @@ using std::shared_ptr;
 
 #include "object.h"
 #include "component.h"
+#include "world_impl.h"
 
 class IComponent;
 class FObject;
@@ -23,7 +24,7 @@ class FClass {
         void AddComponent(shared_ptr<IComponent> component);
         void Initialise();
 
-        void Update(float deltaMs, FObject& object);
+        void Update(float deltaMs, FObject& object, FWorld& world);
     private:
         string name;
         vector< shared_ptr<IComponent> > components;
