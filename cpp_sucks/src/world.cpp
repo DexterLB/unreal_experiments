@@ -52,7 +52,7 @@ void World::ParseTypes(const char* file) {
         f.close();
     }
 
-    for (const auto& kv: this->classes) {
+    for (auto& kv: this->classes) {
         kv.second.Initialise();
     }
 }

@@ -1,3 +1,6 @@
+#include <algorithm>
+using std::remove_if;
+
 #include "base_object.h"
 
 FClass::FClass() {
@@ -19,5 +22,23 @@ void FClass::Update(float deltaMs, FObject& object) {
 }
 
 void FClass::AddComponent(shared_ptr<IComponent> component) {
-    this->components.push_back(component); // priority
+    this->components.push_back(component);
+}
+
+void FClass::Initialise() {
+    // remove fake components
+    this->components.erase(
+        remove_if(
+            this->components.begin(),
+            this->components.end(),
+            [](const auto& component) { return !component; }
+        )
+    );
+
+    // sort components by priority
+    sort(
+        this->components.begin(),
+        this->components.end(),
+        [](const auto& a, const auto& b) { return a->Priority() < b->Priority(); }
+    );
 }
