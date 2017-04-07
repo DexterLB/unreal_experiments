@@ -1,7 +1,3 @@
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include <memory>
 using std::shared_ptr;
 using std::make_unique;
@@ -9,7 +5,15 @@ using std::make_unique;
 #include "renderable.h"
 
 void FRenderableComponent::Update(float deltaMs, FWorld& world) {
-    cout << "update render" << endl;
+    world.Log()
+        << this->object->Name()
+        << " is located at "
+        << "("
+        << this->object->X()
+        << ", "
+        << this->object->Y()
+        << ")"
+        << endl;
 }
 
 unique_ptr<FRenderableComponent> FRenderableComponent::Make(const string& argument) {

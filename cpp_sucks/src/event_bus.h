@@ -15,9 +15,9 @@ using std::type_info;
 #include <typeindex>
 using std::type_index;
 
-class Event {
+class IEvent {
 public:
-    virtual ~Event() {};
+    virtual ~IEvent() {};
 };
 
 // here be dragons
@@ -34,7 +34,7 @@ public:
         auto t = type_index(typeid(T));
         if (this->shit.find(t) != this->shit.end()) {
             this->shit[t].push_back(
-                [f](const Event& event) {
+                [f](const IEvent& event) {
                     f(dynamic_cast<const T&>(event));
                 }
             );
@@ -44,9 +44,9 @@ public:
     template <typename T>
     void Emit(const T& event) {
         for (const auto& f :  this->shit[type_index(typeid(T))]) {
-            f(dynamic_cast<const Event&>(event));
+            f(dynamic_cast<const IEvent&>(event));
         }
     }
 private:
-    unordered_map< type_index, vector< function< void (const Event&) > > > shit;
+    unordered_map< type_index, vector< function< void (const IEvent&) > > > shit;
 };

@@ -4,6 +4,7 @@
 using std::cout;
 using std::cin;
 using std::endl;
+using std::ostream;
 
 #include <fstream>
 using std::ifstream;
@@ -31,7 +32,10 @@ class FWorld : public IWorld
         void SpawnObject(const char* objectType, const char* objectName);
         void Update(float deltaMs);
         void Destroy();
+
+        ostream& Log();
     private:
         unordered_map<string, unique_ptr<FClass> > classes;
         vector< unique_ptr<FObject> > objects;
+        int frameIndex;
 };

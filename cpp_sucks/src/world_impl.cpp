@@ -5,11 +5,12 @@ using std::make_unique;
 #include "world_impl.h"
 
 void FWorld::Update(float deltaMs) {
+    this->frameIndex++;
+    this->Log() << "--- Starting frame " << this->frameIndex << " ---" << endl;
+
     for (const auto& object : this->objects) {
         object->Update(deltaMs, *this);
     }
-
-    cout << "FWorld updated with " << deltaMs << " ms." << endl;
 }
 
 void FWorld::ParseTypes(const char* file) {
@@ -38,4 +39,8 @@ void FWorld::SpawnObject(const char* objectType, const char* objectName) {
 
 void FWorld::Destroy() {
     delete this;    // this is evil.
+}
+
+ostream& FWorld::Log() {
+    return cout;
 }

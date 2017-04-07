@@ -1,7 +1,3 @@
-#include <iostream>
-using std::cout;
-using std::endl;
-
 #include <sstream>
 using std::stringstream;
 
@@ -64,7 +60,6 @@ unique_ptr<IBaseComponent> MakeComponent(const string& name, const string& argum
             return FMultiplierComponent::Make(argument);
         */
         default:
-            cout << "no such component: " << name << endl;
             return nullptr;
     }
 }
@@ -89,7 +84,6 @@ void ParseClasses(istream& stream, unordered_map<string, unique_ptr<FClass> >& c
     unique_ptr<FClass> klass;
 
     while (getline(stream, line)) {
-        std::cout << "line: " << line << std::endl;
         if (line.size() == 0) {
             continue;   // ignore empty lines just in case
         }

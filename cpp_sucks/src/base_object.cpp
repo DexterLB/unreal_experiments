@@ -22,11 +22,9 @@ const string& FClass::Name() const {
 
 vector< unique_ptr<IComponent> > FClass::MakeComponents(FObject* object) {
     vector< unique_ptr<IComponent> > components;
-    cout << "begin copy" << endl;
     for (auto& component: this->components) {
         // copying seems to be the most straight-forward way to construct
         // "instances" of components
-        cout << "component of " << this->name << endl;
         components.push_back(move(component->Instantiate(object)));
     }
     return components;
@@ -43,5 +41,4 @@ void FClass::Initialise() {
         this->components.end(),
         [](const auto& a, const auto& b) { return a->Priority() < b->Priority(); }
     );
-    cout << "components of " << this-> name << ": " << this->components.size() << endl;
 }

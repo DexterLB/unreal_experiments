@@ -9,29 +9,43 @@ class FWorld;
 #include "base_object.h"
 #include "world_impl.h"
 #include "component.h"
+#include "event_bus.h"
+
+struct FObjectMovedEvent : public IEvent {
+    FObjectMovedEvent(float _x, float _y) : x(_x), y(_y) {};
+    float x;
+    float y;
+};
 
 class FObject {
-    public:
-        FObject(FClass* klass, const string& name);
-        FObject(const FObject&) = delete;
-        FObject& operator=(const FObject&) = delete;
+public:
+    FObject(FClass* klass, const string& name);
+    FObject(const FObject&) = delete;
+    FObject& operator=(const FObject&) = delete;
 
-        const FClass& Class() const;
-        const string& Name() const;
+    const FClass& Class() const;
+    const string& Name() const;
 
-        void Update(float deltaMs, FWorld& world);
+    void Update(float deltaMs, FWorld& world);
 
-        /*
-        void SetX(float location);
-        void MoveX(float locationOffset);
-        float X();
+    void SetX(float location);
+    void MoveX(float locationOffset);
+    float X();
 
-        void SetY(float height);
-        void MoveY(float locationOffset);
-        float Y();
-        */
-    private:
-        FClass* klass;  // maybe some kind of smart pointer?
-        string name;
-        vector< unique_ptr<IComponent> > components;
+    void SetY(float height);
+    void MoveY(float locationOffset);
+    float Y();
+
+    void SetLocation(float x, float y);
+
+    FEventBus EventBus;
+private:
+    FClass* klass;  // maybe some kind of smart pointer?
+    string name;
+    vector< unique_ptr<IComponent> > components;
+
+    float x;
+    float y;
+
+    void moved();
 };

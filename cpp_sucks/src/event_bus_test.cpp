@@ -7,13 +7,13 @@ using std::endl;
 #include <string>
 using std::string;
 
-class FooEvent: public Event {
+class FooEvent: public IEvent {
 public:
     FooEvent(int _foo) : foo(_foo) {};
     int foo;
 };
 
-class BarEvent: public Event {
+class BarEvent: public IEvent {
 public:
     BarEvent(string _bar) : bar(_bar) {};
     string bar;
