@@ -25,6 +25,7 @@ using std::unordered_map;
 
 #include "parser.h"
 #include "components/renderable.h"
+#include "components/jumpable.h"
 
 enum class Component {
     None = 0,
@@ -59,17 +60,7 @@ static inline std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
 }
 
-shared_ptr<IComponent> MakeComponent(const string& name, const vector<string>& arguments) {
-    switch(componentNames[name]) {
-        case Component::Renderable:
-            return make_shared<FRenderableComponent>();
-        default:
-            cout << "no such component: " << name << endl;
-            return nullptr;
-    }
-}
-
-vector<string> ParseArguments(const string& argumentList) {
+vector<string> ParseStringArguments(const string& argumentList) {
     stringstream ss(argumentList);
     vector<string> arguments;
 
@@ -83,11 +74,32 @@ vector<string> ParseArguments(const string& argumentList) {
     return arguments;
 }
 
+shared_ptr<IComponent> MakeComponent(const string& name, const string& argument) {
+    switch(componentNames[name]) {
+        case Component::Renderable:
+            return make_shared<FRenderableComponent>();
+        case Component::Jumpable: {
+            auto arguments = ParseStringArguments(argument);
+
+            float height = stof(arguments[0]);
+            float time = stof(arguments[1]);
+            float delay = stof(arguments[2]);
+            // segfault on wrong number of arguments, wooooo
+
+            cout << "create jumpable" << endl;
+            return make_shared<FJumpableComponent>(height, time, delay);
+        }
+        default:
+            cout << "no such component: " << name << endl;
+            return nullptr;
+    }
+}
+
 shared_ptr<IComponent> ParseComponent(const string& line) {
     static const regex re("-\\s*([\\w]+)(\\((.*)\\))?");
     smatch match;
     if (regex_search(line, match, re)) {
-        return MakeComponent(match.str(1), ParseArguments(match.str(3)));
+        return MakeComponent(match.str(1), match.str(3));
     } else {
         return nullptr;
     }

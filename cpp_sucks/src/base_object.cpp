@@ -1,6 +1,8 @@
 #include <algorithm>
 using std::remove_if;
 
+#include <iostream>
+
 #include "base_object.h"
 
 FClass::FClass() {
@@ -31,7 +33,7 @@ void FClass::Initialise() {
         remove_if(
             this->components.begin(),
             this->components.end(),
-            [](const auto& component) { return !component; }
+            [](const auto& component) { return component != nullptr; }
         )
     );
 
