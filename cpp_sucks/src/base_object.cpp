@@ -16,7 +16,7 @@ const string& FClass::Name() const {
 }
 
 void FClass::Update(float deltaMs, FObject& object) {
-    for (auto & component: this->components) {
+    for (auto& component: this->components) {
         component->Update(deltaMs, object);
     }
 }
