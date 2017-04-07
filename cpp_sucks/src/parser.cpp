@@ -26,9 +26,11 @@ using std::unordered_map;
 #include "parser.h"
 #include "components/renderable.h"
 #include "components/jumpable.h"
+/*
 #include "components/fibonacci_walk.h"
 #include "components/shooter.h"
 #include "components/multiplier.h"
+*/
 
 enum class Component {
     None = 0,
@@ -47,25 +49,27 @@ unordered_map<string, Component> componentNames = {
     { "Multiplier",     Component::Multiplier       }
 };
 
-unique_ptr<IComponent> MakeComponent(const string& name, const string& argument) {
+unique_ptr<IBaseComponent> MakeComponent(const string& name, const string& argument) {
     switch(componentNames[name]) {
         case Component::Renderable:
             return FRenderableComponent::Make(argument);
         case Component::Jumpable:
             return FJumpableComponent::Make(argument);
+        /*
         case Component::FibonacciWalk:
             return FFibonacciWalkComponent::Make(argument);
         case Component::Shooter:
             return FShooterComponent::Make(argument);
         case Component::Multiplier:
             return FMultiplierComponent::Make(argument);
+        */
         default:
             cout << "no such component: " << name << endl;
             return nullptr;
     }
 }
 
-unique_ptr<IComponent> ParseComponent(const string& line) {
+unique_ptr<IBaseComponent> ParseComponent(const string& line) {
     static const regex re("-\\s*([\\w]+)(\\((.*)\\))?");
     smatch match;
     if (regex_search(line, match, re)) {

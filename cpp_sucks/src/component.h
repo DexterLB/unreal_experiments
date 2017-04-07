@@ -10,10 +10,7 @@ class FObject;
 
 class IComponent {
 public:
-    virtual void Update(float deltaMs, FObject& object, FWorld& world) = 0;
-    virtual int Priority();
+    virtual void Update(float deltaMs, FWorld& world) = 0;
 
-    virtual unique_ptr<IComponent> Clone() = 0;
-
-    ~IComponent() {};
+    virtual ~IComponent() {};
 };

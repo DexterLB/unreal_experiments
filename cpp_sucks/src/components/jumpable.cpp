@@ -13,7 +13,7 @@ FJumpableComponent::FJumpableComponent(float _height, float _time, float _delay)
     : height(_height), time(_time), delay(_delay) {
 }
 
-void FJumpableComponent::Update(float deltaMs, FObject& object, FWorld& world) {
+void FJumpableComponent::Update(float deltaMs, FWorld& world) {
     cout << "update jump: " << this->height << " " << this->time << " " << this->delay << endl;
 }
 
@@ -29,6 +29,8 @@ unique_ptr<FJumpableComponent> FJumpableComponent::Make(const string& argument) 
     return make_unique<FJumpableComponent>(height, time, delay);
 }
 
-unique_ptr<IComponent> FJumpableComponent::Clone() {
-    return make_unique<FJumpableComponent>(*this);
+unique_ptr<IComponent> FJumpableComponent::Instantiate(FObject* object) {
+    auto instance = make_unique<FJumpableComponent>(*this);
+    instance->object = object;
+    return instance;
 }

@@ -8,7 +8,7 @@ using std::make_unique;
 
 #include "renderable.h"
 
-void FRenderableComponent::Update(float deltaMs, FObject& object, FWorld& world) {
+void FRenderableComponent::Update(float deltaMs, FWorld& world) {
     cout << "update render" << endl;
 }
 
@@ -16,6 +16,8 @@ unique_ptr<FRenderableComponent> FRenderableComponent::Make(const string& argume
     return make_unique<FRenderableComponent>();
 }
 
-unique_ptr<IComponent> FRenderableComponent::Clone() {
-    return make_unique<FRenderableComponent>(*this);
+unique_ptr<IComponent> FRenderableComponent::Instantiate(FObject* object) {
+    auto instance = make_unique<FRenderableComponent>(*this);
+    instance->object = object;
+    return instance;
 }
