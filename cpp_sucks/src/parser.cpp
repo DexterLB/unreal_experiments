@@ -26,16 +26,25 @@ using std::unordered_map;
 #include "parser.h"
 #include "components/renderable.h"
 #include "components/jumpable.h"
+#include "components/fibonacci_walk.h"
+#include "components/shooter.h"
+#include "components/multiplier.h"
 
 enum class Component {
     None = 0,
     Jumpable,
-    Renderable
+    Renderable,
+    FibonacciWalk,
+    Shooter,
+    Multiplier
 };
 
 unordered_map<string, Component> componentNames = {
-    { "Jumpable", Component::Jumpable },
-    { "Renderable", Component::Renderable }
+    { "Jumpable",       Component::Jumpable         },
+    { "Renderable",     Component::Renderable       },
+    { "FibonacciWalk",  Component::FibonacciWalk    },
+    { "Shooter",        Component::Shooter          },
+    { "Multiplier",     Component::Multiplier       }
 };
 
 shared_ptr<IComponent> MakeComponent(const string& name, const string& argument) {
@@ -44,6 +53,12 @@ shared_ptr<IComponent> MakeComponent(const string& name, const string& argument)
             return FRenderableComponent::Make(argument);
         case Component::Jumpable:
             return FJumpableComponent::Make(argument);
+        case Component::FibonacciWalk:
+            return FFibonacciWalkComponent::Make(argument);
+        case Component::Shooter:
+            return FShooterComponent::Make(argument);
+        case Component::Multiplier:
+            return FMultiplierComponent::Make(argument);
         default:
             cout << "no such component: " << name << endl;
             return nullptr;
