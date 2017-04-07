@@ -4,6 +4,7 @@ FObject::FObject(FClass* klass, const string& name) {
     this->klass = klass;
     this->name = name;
     this->components = klass->MakeComponents(this);
+    this->EventBus.Register<FObjectMovedEvent>();
 }
 
 const FClass& FObject::Class() const {
