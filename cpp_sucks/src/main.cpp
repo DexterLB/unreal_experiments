@@ -8,6 +8,7 @@
 #include <unistd.h>
 
 #include "world.h"
+#include "event_bus.h"
 
 void handler(int sig) {
     void *array[10];
@@ -22,6 +23,7 @@ void handler(int sig) {
     exit(1);
 }
 
+void EventTest();
 int main(int argc, char *argv[]) {
     signal(SIGSEGV, handler);
 
@@ -32,5 +34,7 @@ int main(int argc, char *argv[]) {
     world->SpawnObject("Luigi", "luigi1");
     world->Update(42);
     world->Destroy();
+
+    EventTest();
     return 0;
 }
