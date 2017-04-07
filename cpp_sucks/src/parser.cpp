@@ -38,57 +38,12 @@ unordered_map<string, Component> componentNames = {
     { "Renderable", Component::Renderable }
 };
 
-// shameless copy-paste from stackoverflow (I like his style)
-// http://stackoverflow.com/a/217605
-
-// trim from start
-static inline std::string &ltrim(std::string &s) {
-    s.erase(s.begin(), std::find_if(s.begin(), s.end(),
-            std::not1(std::ptr_fun<int, int>(std::isspace))));
-    return s;
-}
-
-// trim from end
-static inline std::string &rtrim(std::string &s) {
-    s.erase(std::find_if(s.rbegin(), s.rend(),
-            std::not1(std::ptr_fun<int, int>(std::isspace))).base(), s.end());
-    return s;
-}
-
-// trim from both ends
-static inline std::string &trim(std::string &s) {
-    return ltrim(rtrim(s));
-}
-
-vector<string> ParseStringArguments(const string& argumentList) {
-    stringstream ss(argumentList);
-    vector<string> arguments;
-
-    while (ss.good()) {
-        string argument;
-        getline(ss, argument, ',');
-        trim(argument);
-        arguments.push_back(argument);
-    }
-
-    return arguments;
-}
-
 shared_ptr<IComponent> MakeComponent(const string& name, const string& argument) {
     switch(componentNames[name]) {
         case Component::Renderable:
-            return make_shared<FRenderableComponent>();
-        case Component::Jumpable: {
-            auto arguments = ParseStringArguments(argument);
-
-            float height = stof(arguments[0]);
-            float time = stof(arguments[1]);
-            float delay = stof(arguments[2]);
-            // segfault on wrong number of arguments, wooooo
-
-            cout << "create jumpable" << endl;
-            return make_shared<FJumpableComponent>(height, time, delay);
-        }
+            return FRenderableComponent::Make(argument);
+        case Component::Jumpable:
+            return FJumpableComponent::Make(argument);
         default:
             cout << "no such component: " << name << endl;
             return nullptr;
