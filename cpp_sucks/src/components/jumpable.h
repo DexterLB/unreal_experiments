@@ -10,8 +10,17 @@ public:
     static unique_ptr<FJumpableComponent> Make(const string& argument);
     unique_ptr<IComponent> Instantiate(FObject* object);
 private:
+    FObject* object;
+
+    // constant values for all instances
     float height;
     float time;
     float delay;
-    FObject* object;
+
+    // precomputed values
+    float period;
+    float jump_speed;
+
+    // always changing values
+    float elapsed_in_period;
 };

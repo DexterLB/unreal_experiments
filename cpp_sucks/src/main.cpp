@@ -12,8 +12,10 @@ int main(int argc, char *argv[]) {
     world->SpawnObject("Mario", "mario1");
     world->SpawnObject("Luigi", "luigi2");
     world->SpawnObject("Luigi", "luigi1");
-    world->Update(42);
+
     world->Update(1000);
+    world->Update(500);
+
     world->Destroy();
 
     EventTest();
