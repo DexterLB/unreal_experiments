@@ -4,6 +4,8 @@ using std::make_unique;
 
 #include "world_impl.h"
 
+
+
 void FWorld::Update(float deltaMs) {
     this->frameIndex++;
     this->Log() << "--- Starting frame " << this->frameIndex << " ---" << endl;
@@ -17,10 +19,15 @@ void FWorld::ParseTypes(const char* file) {
     if (!file || file[0] == '\0' ) {
         ParseClasses(cin, this->classes);
     } else {
+        string filename(file);
+
         ifstream f;
-        f.open(file);
+        f.open(filename);
         ParseClasses(f, this->classes);
         f.close();
+
+        string out_filename = filename.substr(0, filename.size() - 2) + "out";
+        this->log = make_unique<ofstream>(out_filename);
     }
 
     for (auto& kv: this->classes) {
@@ -58,9 +65,14 @@ FClass* FWorld::GetClass(const string& objectType) {
 }
 
 void FWorld::Destroy() {
+    this->log->close();
     delete this;    // this is evil.
 }
 
 ostream& FWorld::Log() {
-    return cout;
+    if (this->log) {
+        return *(this->log);
+    } else {
+        return cout;
+    }
 }

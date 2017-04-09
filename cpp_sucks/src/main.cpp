@@ -8,7 +8,7 @@ void EventTest();
 int main(int argc, char *argv[]) {
 
     IWorld* world = CreateWorld();
-    world->ParseTypes(nullptr);
+    world->ParseTypes("/tmp/test.in");
     world->SpawnObject("Mario", "mario1");
     world->SpawnObject("Luigi", "luigi2");
 

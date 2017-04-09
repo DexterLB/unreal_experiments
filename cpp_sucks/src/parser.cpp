@@ -76,7 +76,13 @@ unique_ptr<IBaseComponent> ParseComponent(const string& line) {
 }
 
 unique_ptr<FClass> ParseClass(const string& line) {
-    return make_unique<FClass>(line);
+    const string prefix("class ");
+    if (!line.compare(0, prefix.size(), prefix)) {
+        return make_unique<FClass>(line.substr(prefix.size()));
+    } else {
+        cerr << "wrong specifier: " << line;
+        return nullptr;
+    }
 }
 
 void ParseClasses(istream& stream, unordered_map<string, unique_ptr<FClass> >& classes) {

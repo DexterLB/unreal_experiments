@@ -8,6 +8,7 @@ using std::ostream;
 
 #include <fstream>
 using std::ifstream;
+using std::ofstream;
 
 #include <vector>
 using std::vector;
@@ -49,4 +50,5 @@ class FWorld : public IWorld
         unordered_map<string, unique_ptr<FClass> > classes;
         vector< unique_ptr<FObject> > objects;
         int frameIndex;
+        unique_ptr<ofstream> log = nullptr;
 };
