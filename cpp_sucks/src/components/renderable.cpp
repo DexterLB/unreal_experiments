@@ -25,3 +25,7 @@ unique_ptr<IComponent> FRenderableComponent::Instantiate(FObject* object) {
     instance->object = object;
     return instance;
 }
+
+int FRenderableComponent::Priority() {
+    return 5;
+}

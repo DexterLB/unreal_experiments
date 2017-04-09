@@ -11,6 +11,8 @@ public:
 
     unique_ptr<IComponent> Instantiate(FObject* object);
     static unique_ptr<FRenderableComponent> Make(const string& argument);
+
+    int Priority();
 private:
     FObject* object;
 };

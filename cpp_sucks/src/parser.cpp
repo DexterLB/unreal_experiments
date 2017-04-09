@@ -22,8 +22,8 @@ using std::unordered_map;
 #include "parser.h"
 #include "components/renderable.h"
 #include "components/jumpable.h"
-/*
 #include "components/fibonacci_walk.h"
+/*
 #include "components/shooter.h"
 #include "components/multiplier.h"
 */
@@ -51,9 +51,9 @@ unique_ptr<IBaseComponent> MakeComponent(const string& name, const string& argum
             return FRenderableComponent::Make(argument);
         case Component::Jumpable:
             return FJumpableComponent::Make(argument);
-        /*
         case Component::FibonacciWalk:
             return FFibonacciWalkComponent::Make(argument);
+        /*
         case Component::Shooter:
             return FShooterComponent::Make(argument);
         case Component::Multiplier:

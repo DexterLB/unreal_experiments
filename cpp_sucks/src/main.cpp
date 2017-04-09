@@ -11,10 +11,14 @@ int main(int argc, char *argv[]) {
     world->ParseTypes(nullptr);
     world->SpawnObject("Mario", "mario1");
     world->SpawnObject("Luigi", "luigi2");
-    world->SpawnObject("Luigi", "luigi1");
 
     world->Update(1000);
     world->Update(500);
+    world->Update(500);
+    world->Update(500);
+    world->Update(100);
+    world->Update(600);
+    world->Update(1000);
 
     world->Destroy();
 
