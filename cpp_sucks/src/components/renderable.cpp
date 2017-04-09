@@ -4,9 +4,9 @@ using std::make_unique;
 
 #include "renderable.h"
 
-void FRenderableComponent::Update(float deltaMs, FWorld& world) {
+void FRenderableComponent::Update(float deltaMs) {
     auto& object = this->world->Object(this->objectID);
-    world.Log()
+    this->world->Log()
         << object.Name()
         << " is located at "
         << "("

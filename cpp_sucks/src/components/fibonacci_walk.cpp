@@ -22,7 +22,7 @@ FFibonacciWalkComponent::FFibonacciWalkComponent(int _maxFibIndex, float _sleepI
     this->frameIndex = 0;
 }
 
-void FFibonacciWalkComponent::Update(float deltaMs, FWorld& world) {
+void FFibonacciWalkComponent::Update(float deltaMs) {
 
     if (this->frameIndex >= this->maxFibIndex) {
         this->frameIndex = 0;

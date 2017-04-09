@@ -49,7 +49,7 @@ FMultiplierComponentInstance::FMultiplierComponentInstance(FObjectID _objectID, 
     this->explodedMushrooms = vector<bool>(mushroomLocations->size(), false);
 }
 
-void FMultiplierComponentInstance::Update(float deltaMs, FWorld& world) {
+void FMultiplierComponentInstance::Update(float deltaMs) {
     auto& object = this->world->Object(this->objectID);
 
     for (size_t i = 0; i < this->mushroomLocations->size(); i++) {

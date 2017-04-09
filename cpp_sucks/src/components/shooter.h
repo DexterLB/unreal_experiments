@@ -6,7 +6,7 @@
 class FShooterComponent : public IComponent, public IBaseComponent {
 public:
     FShooterComponent(const string& projectile, float interval);
-    void Update(float deltaMs, FWorld& world);
+    void Update(float deltaMs);
 
     static unique_ptr<FShooterComponent> Make(const string& argument);
     unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world);

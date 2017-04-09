@@ -28,7 +28,7 @@ public:
     const FClass& Class() const;
     const string& Name() const;
 
-    void Update(float deltaMs, FWorld& world);
+    void Update(float deltaMs);
 
     void SetX(float location);
     void MoveX(float locationOffset);

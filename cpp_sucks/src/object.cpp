@@ -18,9 +18,9 @@ const string& FObject::Name() const {
     return this->name;
 }
 
-void FObject::Update(float deltaMs, FWorld& world) {
+void FObject::Update(float deltaMs) {
     for (auto& component: this->components) {
-        component->Update(deltaMs, world);
+        component->Update(deltaMs);
     }
 }
 

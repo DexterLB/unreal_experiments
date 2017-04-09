@@ -28,7 +28,7 @@ private:
 class FMultiplierComponentInstance : public IComponent {
 public:
     FMultiplierComponentInstance(FObjectID objectID, FWorld* world, vector< pair<float, float> >* mushroomLocations, float triggerDistance);
-    void Update(float deltaMs, FWorld& world);
+    void Update(float deltaMs);
 
 private:
     FObjectID objectID;

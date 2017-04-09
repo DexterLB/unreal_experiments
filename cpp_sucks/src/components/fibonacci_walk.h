@@ -5,7 +5,7 @@
 class FFibonacciWalkComponent : public IComponent, public IBaseComponent {
 public:
     FFibonacciWalkComponent(int maxFibIndex, float sleepInterval, float sleepDuration);
-    void Update(float deltaMs, FWorld& world);
+    void Update(float deltaMs);
 
     static unique_ptr<FFibonacciWalkComponent> Make(const string& argument);
     unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world);

@@ -11,7 +11,7 @@ void FWorld::Update(float deltaMs) {
     this->Log() << "--- Starting frame " << this->frameIndex << " ---" << endl;
 
     for (size_t i = 0; i < this->objects.size(); i++) {
-        this->Object(i).Update(deltaMs, *this);
+        this->Object(i).Update(deltaMs);
     }
 }
 

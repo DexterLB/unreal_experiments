@@ -20,7 +20,7 @@ FJumpableComponent::FJumpableComponent(float _height, float _time, float _delay)
     this->elapsed_in_period = 0;
 }
 
-void FJumpableComponent::Update(float deltaMs, FWorld& world) {
+void FJumpableComponent::Update(float deltaMs) {
     this->elapsed_in_period = fmod(this->elapsed_in_period + deltaMs, this->period);
 
     auto& object = this->world->Object(this->objectID);

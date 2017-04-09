@@ -24,7 +24,7 @@ FShooterComponent::FShooterComponent(const string& _projectile, float _interval)
     this->elapsed_in_period = 0;
 }
 
-void FShooterComponent::Update(float deltaMs, FWorld& world) {
+void FShooterComponent::Update(float deltaMs) {
     int times_shot = int((this->elapsed_in_period + deltaMs) / this->interval);
     this->elapsed_in_period = fmod(this->elapsed_in_period + deltaMs, this->interval);
 
