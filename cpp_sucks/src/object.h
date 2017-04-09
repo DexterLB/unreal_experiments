@@ -19,9 +19,11 @@ struct FObjectMovedEvent : public IEvent {
 
 class FObject {
 public:
-    FObject(FWorld* world, FClass* klass, FObjectID id, const string& name);
+    FObject();
     FObject(const FObject&) = delete;
     FObject& operator=(const FObject&) = delete;
+
+    void Initialise(FWorld* world, FClass* klass, FObjectID id, const string& name);
 
     const FClass& Class() const;
     const string& Name() const;

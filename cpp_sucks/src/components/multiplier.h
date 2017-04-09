@@ -13,22 +13,29 @@ using std::pair;
 
 class FMultiplierComponent : public IBaseComponent {
 public:
-    FMultiplierComponent(const vector< pair<int, int> >& mushroomLocations);
+    FMultiplierComponent(const vector< pair<float, float> >& mushroomLocations, float triggerDistance);
 
     static unique_ptr<FMultiplierComponent> Make(const string& argument);
     unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world);
+    void RegisterEvents(FObjectID objectID, FWorld* world);
+
+    int Priority() { return 4; }
 private:
-    vector< pair<int, int> > mushroomLocations;
+    vector< pair<float, float> > mushroomLocations;
+    float triggerDistance;
 };
 
 class FMultiplierComponentInstance : public IComponent {
 public:
-    FMultiplierComponentInstance(FObjectID objectID, FWorld* world, vector< pair<int, int> >* mushroomLocations);
+    FMultiplierComponentInstance(FObjectID objectID, FWorld* world, vector< pair<float, float> >* mushroomLocations, float triggerDistance);
     void Update(float deltaMs, FWorld& world);
 
 private:
     FObjectID objectID;
     FWorld* world;
 
-    vector< pair<int, int> >* mushroomLocations;
+    vector< pair<float, float> >* mushroomLocations;
+    vector<bool> explodedMushrooms;
+
+    float triggerDistance;
 };

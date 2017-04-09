@@ -23,6 +23,10 @@ const string& FClass::Name() const {
 vector< unique_ptr<IComponent> > FClass::MakeComponents(FObjectID id, FWorld* world) {
     vector< unique_ptr<IComponent> > components;
     for (auto& component: this->components) {
+        component->RegisterEvents(id, world);
+    }
+
+    for (auto& component: this->components) {
         components.push_back(move(component->Instantiate(id, world)));
     }
     return components;

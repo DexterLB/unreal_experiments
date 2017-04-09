@@ -10,6 +10,7 @@ using std::make_unique;
 
 #include "fibonacci_walk.h"
 #include "../argument_parser.h"
+#include "multiplier_event.h"
 
 FFibonacciWalkComponent::FFibonacciWalkComponent(int _maxFibIndex, float _sleepInterval, float _sleepDuration)
     : maxFibIndex(_maxFibIndex), sleepInterval(_sleepInterval * 1000), sleepDuration(_sleepDuration * 1000) {
@@ -59,5 +60,13 @@ unique_ptr<IComponent> FFibonacciWalkComponent::Instantiate(FObjectID objectID, 
     auto instance = make_unique<FFibonacciWalkComponent>(*this);
     instance->objectID = objectID;
     instance->world = world;
+    auto& object = world->Object(objectID);
+
+    auto instance_p = instance.get();
+
+    object.EventBus.Subscribe<FMushroomEvent>([instance_p](auto& event) {
+        instance_p->maxFibIndex *= 2;
+    });
+
     return instance;
 }

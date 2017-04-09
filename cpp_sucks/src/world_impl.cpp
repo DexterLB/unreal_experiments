@@ -42,12 +42,15 @@ FObject& FWorld::Object(FObjectID id) {
 }
 
 void FWorld::SpawnObject(FClass* klass, const string& objectName) {
-    this->objects.push_back(make_unique<FObject>(
+    FObjectID id = this->objects.size();
+    this->objects.push_back(make_unique<FObject>());
+
+    this->objects[id]->Initialise(
         this,
         klass,  // maybe there's a better way than passing a bare pointer?
-        this->objects.size(),
+        id,
         objectName
-    ));
+    );
 }
 
 FClass* FWorld::GetClass(const string& objectType) {

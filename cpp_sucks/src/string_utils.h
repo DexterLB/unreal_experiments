@@ -26,3 +26,7 @@ static inline std::string &trim(std::string &s) {
     return ltrim(rtrim(s));
 }
 
+static inline std::string& remove_char(std::string& s, char c) {
+    s.erase(std::remove(s.begin(), s.end(), c), s.end());
+    return s;
+}

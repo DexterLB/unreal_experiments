@@ -15,6 +15,7 @@ public:
     virtual int Priority();
 
     virtual unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world) = 0;
+    virtual void RegisterEvents(FObjectID objectID, FWorld* world) {};
 
     virtual ~IBaseComponent() {};
 };

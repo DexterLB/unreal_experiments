@@ -9,6 +9,7 @@ using std::make_unique;
 #include <cmath>
 
 #include "jumpable.h"
+#include "multiplier_event.h"
 #include "../argument_parser.h"
 
 FJumpableComponent::FJumpableComponent(float _height, float _time, float _delay)
@@ -55,5 +56,14 @@ unique_ptr<IComponent> FJumpableComponent::Instantiate(FObjectID objectID, FWorl
     auto instance = make_unique<FJumpableComponent>(*this);
     instance->objectID = objectID;
     instance->world = world;
+
+    auto& object = world->Object(objectID);
+
+    auto instance_p = instance.get();
+
+    object.EventBus.Subscribe<FMushroomEvent>([instance_p](auto& event) {
+        instance_p->height *= 2;
+        instance_p->jump_speed *= 2;
+    });
     return instance;
 }
