@@ -11,6 +11,10 @@ using std::make_unique;
 using std::shared_ptr;
 using std::make_shared;
 
+#include <iostream>
+using std::cerr;
+using std::endl;
+
 #include <regex>
 using std::regex;
 using std::smatch;
@@ -23,8 +27,8 @@ using std::unordered_map;
 #include "components/renderable.h"
 #include "components/jumpable.h"
 #include "components/fibonacci_walk.h"
-/*
 #include "components/shooter.h"
+/*
 #include "components/multiplier.h"
 */
 
@@ -53,13 +57,14 @@ unique_ptr<IBaseComponent> MakeComponent(const string& name, const string& argum
             return FJumpableComponent::Make(argument);
         case Component::FibonacciWalk:
             return FFibonacciWalkComponent::Make(argument);
-        /*
         case Component::Shooter:
             return FShooterComponent::Make(argument);
+        /*
         case Component::Multiplier:
             return FMultiplierComponent::Make(argument);
         */
         default:
+            cerr << "No such component: " << name << endl;
             return nullptr;
     }
 }

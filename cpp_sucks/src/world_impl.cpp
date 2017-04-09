@@ -8,8 +8,8 @@ void FWorld::Update(float deltaMs) {
     this->frameIndex++;
     this->Log() << "--- Starting frame " << this->frameIndex << " ---" << endl;
 
-    for (const auto& object : this->objects) {
-        object->Update(deltaMs, *this);
+    for (size_t i = 0; i < this->objects.size(); i++) {
+        this->Object(i).Update(deltaMs, *this);
     }
 }
 
@@ -29,12 +29,29 @@ void FWorld::ParseTypes(const char* file) {
 }
 
 void FWorld::SpawnObject(const char* objectType, const char* objectName) {
-    FClass* klass = this->classes[string(objectType)].get();   // a dangerous game, this is
+    this->SpawnObject(string(objectType), string(objectName));
+}
 
+void FWorld::SpawnObject(const string& objectType, const string& objectName) {
+    auto klass = this->GetClass(objectType);
+    this->SpawnObject(klass, objectName);
+}
+
+FObject& FWorld::Object(FObjectID id) {
+    return *(this->objects[id]);
+}
+
+void FWorld::SpawnObject(FClass* klass, const string& objectName) {
     this->objects.push_back(make_unique<FObject>(
+        this,
         klass,  // maybe there's a better way than passing a bare pointer?
-        string(objectName)
+        this->objects.size(),
+        objectName
     ));
+}
+
+FClass* FWorld::GetClass(const string& objectType) {
+    return this->classes[string(objectType)].get();   // a dangerous game, this is
 }
 
 void FWorld::Destroy() {

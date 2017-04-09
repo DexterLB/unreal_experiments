@@ -9,10 +9,11 @@ class FRenderableComponent : public IComponent, public IBaseComponent {
 public:
     void Update(float deltaMs, FWorld& world);
 
-    unique_ptr<IComponent> Instantiate(FObject* object);
+    unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world);
     static unique_ptr<FRenderableComponent> Make(const string& argument);
 
     int Priority();
 private:
-    FObject* object;
+    FObjectID objectID;
+    FWorld* world;
 };

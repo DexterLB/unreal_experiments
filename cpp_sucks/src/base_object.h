@@ -28,7 +28,7 @@ class FClass {
         void AddComponent(unique_ptr<IBaseComponent> component);
         void Initialise();
 
-        vector< unique_ptr<IComponent> > MakeComponents(FObject* object);
+        vector< unique_ptr<IComponent> > MakeComponents(FObjectID id, FWorld* world);
 
     private:
         string name;

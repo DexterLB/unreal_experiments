@@ -22,19 +22,21 @@ FJumpableComponent::FJumpableComponent(float _height, float _time, float _delay)
 void FJumpableComponent::Update(float deltaMs, FWorld& world) {
     this->elapsed_in_period = fmod(this->elapsed_in_period + deltaMs, this->period);
 
+    auto& object = this->world->Object(this->objectID);
+
     if (this->elapsed_in_period > 2 * this->time) {
         // sleeping between two jumps
-        this->object->SetY(0);
+        object.SetY(0);
         return;
     }
 
     if (this->elapsed_in_period < this->time) {
         // going up
-        this->object->SetY(this->elapsed_in_period * this->jump_speed);
+        object.SetY(this->elapsed_in_period * this->jump_speed);
     } else {
         // going down
         float time_since_peak = this->elapsed_in_period - this->time;
-        this->object->SetY(this->height - (this->jump_speed * time_since_peak));
+        object.SetY(this->height - (this->jump_speed * time_since_peak));
     }
 }
 
@@ -49,8 +51,9 @@ unique_ptr<FJumpableComponent> FJumpableComponent::Make(const string& argument) 
     return make_unique<FJumpableComponent>(height, time, delay);
 }
 
-unique_ptr<IComponent> FJumpableComponent::Instantiate(FObject* object) {
+unique_ptr<IComponent> FJumpableComponent::Instantiate(FObjectID objectID, FWorld* world) {
     auto instance = make_unique<FJumpableComponent>(*this);
-    instance->object = object;
+    instance->objectID = objectID;
+    instance->world = world;
     return instance;
 }

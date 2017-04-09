@@ -41,7 +41,7 @@ void FFibonacciWalkComponent::Update(float deltaMs, FWorld& world) {
         return;
     }
 
-    this->object->MoveX(currentFib);
+    this->world->Object(this->objectID).MoveX(currentFib);
 }
 
 unique_ptr<FFibonacciWalkComponent> FFibonacciWalkComponent::Make(const string& argument) {
@@ -55,8 +55,9 @@ unique_ptr<FFibonacciWalkComponent> FFibonacciWalkComponent::Make(const string& 
     return make_unique<FFibonacciWalkComponent>(maxFibIndex, sleepInterval, sleepDuration);
 }
 
-unique_ptr<IComponent> FFibonacciWalkComponent::Instantiate(FObject* object) {
+unique_ptr<IComponent> FFibonacciWalkComponent::Instantiate(FObjectID objectID, FWorld* world) {
     auto instance = make_unique<FFibonacciWalkComponent>(*this);
-    instance->object = object;
+    instance->objectID = objectID;
+    instance->world = world;
     return instance;
 }

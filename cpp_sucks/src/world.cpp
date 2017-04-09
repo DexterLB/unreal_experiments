@@ -12,8 +12,8 @@ using std::vector;
 #include <unordered_map>
 using std::unordered_map;
 
-#include "world.h"
 #include "world_impl.h"
+#include "world.h"
 
 IWorld* CreateWorld() {
     return new FWorld();

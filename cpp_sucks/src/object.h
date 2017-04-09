@@ -19,7 +19,7 @@ struct FObjectMovedEvent : public IEvent {
 
 class FObject {
 public:
-    FObject(FClass* klass, const string& name);
+    FObject(FWorld* world, FClass* klass, FObjectID id, const string& name);
     FObject(const FObject&) = delete;
     FObject& operator=(const FObject&) = delete;
 
@@ -40,8 +40,8 @@ public:
 
     FEventBus EventBus;
 private:
-    FClass* klass;  // maybe some kind of smart pointer?
     string name;
+    FObjectID id;
     vector< unique_ptr<IComponent> > components;
 
     float x;

@@ -20,12 +20,10 @@ const string& FClass::Name() const {
     return this->name;
 }
 
-vector< unique_ptr<IComponent> > FClass::MakeComponents(FObject* object) {
+vector< unique_ptr<IComponent> > FClass::MakeComponents(FObjectID id, FWorld* world) {
     vector< unique_ptr<IComponent> > components;
     for (auto& component: this->components) {
-        // copying seems to be the most straight-forward way to construct
-        // "instances" of components
-        components.push_back(move(component->Instantiate(object)));
+        components.push_back(move(component->Instantiate(id, world)));
     }
     return components;
 }

@@ -8,9 +8,10 @@ public:
     void Update(float deltaMs, FWorld& world);
 
     static unique_ptr<FJumpableComponent> Make(const string& argument);
-    unique_ptr<IComponent> Instantiate(FObject* object);
+    unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world);
 private:
-    FObject* object;
+    FObjectID objectID;
+    FWorld* world;
 
     // constant values for all instances
     float height;

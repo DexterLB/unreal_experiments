@@ -5,13 +5,14 @@ using std::make_unique;
 #include "renderable.h"
 
 void FRenderableComponent::Update(float deltaMs, FWorld& world) {
+    auto& object = this->world->Object(this->objectID);
     world.Log()
-        << this->object->Name()
+        << object.Name()
         << " is located at "
         << "("
-        << this->object->X()
+        << object.X()
         << ", "
-        << this->object->Y()
+        << object.Y()
         << ")"
         << endl;
 }
@@ -20,9 +21,10 @@ unique_ptr<FRenderableComponent> FRenderableComponent::Make(const string& argume
     return make_unique<FRenderableComponent>();
 }
 
-unique_ptr<IComponent> FRenderableComponent::Instantiate(FObject* object) {
+unique_ptr<IComponent> FRenderableComponent::Instantiate(FObjectID objectID, FWorld* world) {
     auto instance = make_unique<FRenderableComponent>(*this);
-    instance->object = object;
+    instance->objectID = objectID;
+    instance->world = world;
     return instance;
 }
 

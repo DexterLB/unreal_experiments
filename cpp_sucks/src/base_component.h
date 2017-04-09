@@ -14,7 +14,7 @@ class IBaseComponent {
 public:
     virtual int Priority();
 
-    virtual unique_ptr<IComponent> Instantiate(FObject* object) = 0;
+    virtual unique_ptr<IComponent> Instantiate(FObjectID objectID, FWorld* world) = 0;
 
     virtual ~IBaseComponent() {};
 };

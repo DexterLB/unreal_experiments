@@ -15,6 +15,8 @@ using std::vector;
 #include <unordered_map>
 using std::unordered_map;
 
+typedef int FObjectID;
+
 #include "world.h"
 #include "base_object.h"
 #include "object.h"
@@ -29,11 +31,20 @@ class FWorld : public IWorld
         FWorld(const FWorld&) = delete;
         FWorld& operator=(const FWorld&) = delete;
         void ParseTypes(const char* file);
+
         void SpawnObject(const char* objectType, const char* objectName);
+        void SpawnObject(const string& objectType, const string& objectName);
+        void SpawnObject(FClass* klass, const string& objectName);
+        FClass* GetClass(const string& objectType);
+
+        FObject& Object(FObjectID id);
+
         void Update(float deltaMs);
         void Destroy();
 
         ostream& Log();
+
+        virtual ~FWorld() {};
     private:
         unordered_map<string, unique_ptr<FClass> > classes;
         vector< unique_ptr<FObject> > objects;

@@ -1,17 +1,13 @@
 #include "object.h"
 
-FObject::FObject(FClass* klass, const string& name) {
-    this->klass = klass;
+FObject::FObject(FWorld* world, FClass* klass, FObjectID id, const string& name) {
     this->name = name;
-    this->components = klass->MakeComponents(this);
+    this->id = id;
+    this->components = klass->MakeComponents(this->id, world);
     this->EventBus.Register<FObjectMovedEvent>();
 
     this->x = 0;
     this->y = 0;
-}
-
-const FClass& FObject::Class() const {
-    return *(this->klass);
 }
 
 const string& FObject::Name() const {
