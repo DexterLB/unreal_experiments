@@ -28,9 +28,7 @@ using std::unordered_map;
 #include "components/jumpable.h"
 #include "components/fibonacci_walk.h"
 #include "components/shooter.h"
-/*
 #include "components/multiplier.h"
-*/
 
 enum class Component {
     None = 0,
@@ -59,10 +57,8 @@ unique_ptr<IBaseComponent> MakeComponent(const string& name, const string& argum
             return FFibonacciWalkComponent::Make(argument);
         case Component::Shooter:
             return FShooterComponent::Make(argument);
-        /*
         case Component::Multiplier:
             return FMultiplierComponent::Make(argument);
-        */
         default:
             cerr << "No such component: " << name << endl;
             return nullptr;
